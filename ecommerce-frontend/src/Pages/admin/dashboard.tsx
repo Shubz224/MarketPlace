@@ -1,14 +1,11 @@
-import toast from "react-hot-toast";
 import { BiMaleFemale } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 import { FaRegBell } from "react-icons/fa";
 import { HiTrendingDown, HiTrendingUp } from "react-icons/hi";
-import { useSelector } from "react-redux";
-import AdminSidebar from "../../components/admin/AdminSidebar";
-import { BarChart, DoughnutChart } from "../../components/admin/Charts";
-import Table from "../../components/admin/DashboardTable";
-import Loader from "../../components/admin/Loader";
-
+import AdminSidebar from "../../Components/admin/AdminSidebar";
+import { BarChart, DoughnutChart } from "../../Components/admin/Charts";
+import Table from "../../Components/admin/DashboardTable";
+import data from "../../assets/data.json"
 const userImg =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJxA5cTf-5dh5Eusm0puHbvAhOrCRPtckzjA&usqp";
 
@@ -98,7 +95,7 @@ const Dashboard = () => {
               <BiMaleFemale />
             </p>
           </div>
-          <Table data={transaction} />
+          <Table data ={data.transaction} />
         </section>
       </main>
     </div>

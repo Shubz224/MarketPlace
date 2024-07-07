@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import AdminSidebar from "../../../components/admin/AdminSidebar";
+import AdminSidebar from "../../../Components/admin/AdminSidebar";
 
 const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 const allNumbers = "1234567890";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AdminSidebar from "../../../components/admin/AdminSidebar";
+import AdminSidebar from "../../../Components/admin/AdminSidebar";
 
 const Toss = () => {
   const [angle, setAngle] = useState<number>(0);

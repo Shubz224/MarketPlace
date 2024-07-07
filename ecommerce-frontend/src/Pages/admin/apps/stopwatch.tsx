@@ -1,4 +1,4 @@
-import AdminSidebar from "../../../components/admin/AdminSidebar";
+import AdminSidebar from "../../../Components/admin/AdminSidebar";
 import { useState, useEffect } from "react";
 
 const formatTime = (timeInSeconds: number) => {

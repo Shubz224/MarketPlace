@@ -2,8 +2,8 @@ import { ReactElement, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Column } from "react-table";
-import AdminSidebar from "../../components/admin/AdminSidebar";
-import TableHOC from "../../components/admin/TableHOC";
+import AdminSidebar from "../../Components/admin/AdminSidebar";
+import TableHOC from "../../Components/admin/TableHOC";
 
 interface DataType {
   photo: ReactElement;

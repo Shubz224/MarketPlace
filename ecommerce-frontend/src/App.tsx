@@ -6,7 +6,8 @@ import Loader from './Components/loader';
 const  Cart = lazy(()=>import('./Pages/cart')) ;
 const  Home = lazy(()=>import('./Pages/home')) 
 const  Search = lazy(()=>import('./Pages/search'));
-
+//importing components 
+import Header from './Components/header';
 
 //admin routes importing 
 const Dashboard = lazy(() => import("./Pages/admin/dashboard"));
@@ -32,6 +33,7 @@ const App = () => {
   return (
     <Router>
       {/*Header */}
+        <Header/>
        <Suspense fallback ={<Loader/>}>
        <Routes>
         <Route path="/" element={<Home />} />

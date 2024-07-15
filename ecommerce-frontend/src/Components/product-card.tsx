@@ -11,14 +11,11 @@ type ProductsProps = {
 
 const server = "ghgshgfhsgfhf";
 
-
-
-
-
+//displaying products on front  page 
 
 const ProductCard = ({ productId, price, name, photo, stock, handler }: ProductsProps) => {
   return <div className="productCard">
-    <img src={`${server} / ${photo}`} alt={name} />
+    <img src={photo} alt={name} />
     <p>{name}</p>
     <span> ₹{price}</span>
     <div>

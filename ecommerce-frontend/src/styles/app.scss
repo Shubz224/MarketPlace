@@ -20,9 +20,9 @@ a {
   color: black;
 }
 
-$colour1 : #FBF6E2;
-$colour2 : #131842;
-$colour3 : #E68369;
+$color1 : #FBF6E2;
+$color2 : #131842;
+$color3 : #E68369;
 
 
 
@@ -45,6 +45,11 @@ $colour3 : #E68369;
 }
 
 @import "admin-styles/mixin";
+@import "home";
+@import "cart";
+
+
+
 
 @import "admin-styles/dashboard";
 @import "admin-styles/products";
@@ -62,12 +67,12 @@ $colour3 : #E68369;
 
 
   a {
-    color: $colour2;
+    color: $color2;
     letter-spacing: 2px;
     font-size: 1.2rem;
 
     &:hover {
-      color: $colour3
+      color: $color3
     }
 
   }
@@ -78,7 +83,7 @@ button{
   cursor: pointer;
   background-color: transparent;
   &:hover{
-    color : $colour3;
+    color : $color3;
   }
 
 }
@@ -165,7 +170,7 @@ dialog{
 
 
 
-//admin stylng 
+//admin styling 
 
 .admin-container {
   @include grid(1fr 4fr, 2rem);

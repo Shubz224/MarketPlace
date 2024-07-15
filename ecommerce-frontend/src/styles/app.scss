@@ -46,6 +46,8 @@ $color3 : #E68369;
 
 @import "admin-styles/mixin";
 @import "home";
+@import "cart";
+
 
 
 
@@ -168,7 +170,7 @@ dialog{
 
 
 
-//admin stylng 
+//admin styling 
 
 .admin-container {
   @include grid(1fr 4fr, 2rem);

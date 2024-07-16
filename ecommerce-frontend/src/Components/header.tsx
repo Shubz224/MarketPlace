@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { FaSearch, FaShoppingBag, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa"
 import { useState } from "react";
 
-const user = { _id: " ", role: "" };
+const user = { _id: "", role: "" };
 
 const Header = () => {
 
@@ -26,14 +26,16 @@ const Header = () => {
       {
         user?._id ? (
           <>
-            <button onClick={() => setIsOpen(prev => !prev)}>
+            <button onClick={() => setIsOpen((prev) => !prev)}>
               <FaUser />
             </button>
             <dialog open={isOpen}>
               <div>
                 {
                   user.role === "admin" && (
-                    <Link to="/admin/dashboard">Admin</Link>
+                    <Link onClick={() => setIsOpen(false)} to="/admin/dashboard">
+                  Admin
+                </Link>
 
                   )
                 }
@@ -45,7 +47,9 @@ const Header = () => {
               </div>
             </dialog>
           </>
-        ) : <Link   onClick={()=>setIsOpen(false)}    to={"/login"}><FaSignInAlt /></Link>
+        ) : <Link   onClick={()=>setIsOpen(false)}   
+         to={"/login"}><FaSignInAlt />
+         </Link>
       }
     </nav>
   )

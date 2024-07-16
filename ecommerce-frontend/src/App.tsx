@@ -8,8 +8,10 @@ import Loader from './Components/loader';
 const Cart = lazy(() => import('./Pages/cart'));
 const Home = lazy(() => import('./Pages/home'))
 const Search = lazy(() => import('./Pages/search'));
-const  Shipping = lazy(()=>import('./Pages/shipping'));
+const Shipping = lazy(() => import('./Pages/shipping'));
+const Login = lazy(() => import('./Pages/login'));
 import Header from './Components/header';
+
 
 
 //admin routes importing 
@@ -43,12 +45,15 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/search" element={<Search />} />
+          {/* Not not logged in routes */}
+          <Route path="/login" element={<Login />} />
+               
 
-         { /* logged in routes */}
+          { /* logged in routes */}
 
 
           <Route>
-          <Route path='/shipping' element={<Shipping />} />
+            <Route path='/shipping' element={<Shipping />} />
           </Route>
 
 

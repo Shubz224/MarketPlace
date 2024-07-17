@@ -10,6 +10,7 @@ const Home = lazy(() => import('./Pages/home'))
 const Search = lazy(() => import('./Pages/search'));
 const Shipping = lazy(() => import('./Pages/shipping'));
 const Login = lazy(() => import('./Pages/login'));
+const Orders =lazy(()=>import ('./Pages/orders'));
 import Header from './Components/header';
 
 
@@ -51,7 +52,7 @@ const App = () => {
 
           { /* logged in routes */}
 
-
+          <Route path='/orders' element = {<Orders/>}/>
           <Route>
             <Route path='/shipping' element={<Shipping />} />
           </Route>

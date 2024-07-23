@@ -4,8 +4,6 @@ export interface NewUserrequestBody{
     email:String;
     photo:String;
     gender:String;
-    //role:String;
     _id:String;
     dob:Date;
-    
 }

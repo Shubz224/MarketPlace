@@ -4,12 +4,18 @@ import express from 'express'
 import userRoute from "./routes/user.js"
 import { connectDB } from './utils/features.js';
 
-
 //calling connect db 
 connectDB();
 
 const app = express();
 const port = 3000;
+
+
+
+//using middlewears
+app.use(express.json());
+
+
 
 
 app.get("/",(req,res)=>{
@@ -18,9 +24,6 @@ app.get("/",(req,res)=>{
 //using Routes
 
 app.use("/api/v1/user", userRoute);  //all user routes will will here 1
-
-
-
 
 
 

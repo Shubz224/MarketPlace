@@ -1,33 +1,32 @@
-import express from 'express'
+import express from "express";
 
 //importing routes
-import userRoute from "./routes/user.js"
-import { connectDB } from './utils/features.js';
-import { errorMiddleware } from './middlewares/error.js';
+import userRoute from "./routes/user.js";
+import productRoute from "./routes/products.js";
+import { connectDB } from "./utils/features.js";
+import { errorMiddleware } from "./middlewares/error.js";
 
-//calling connect db 
+//calling connect db
 connectDB();
 
 const app = express();
 const port = 3000;
 
-
 //using middlewear
 app.use(express.json());
-
-
-app.get("/",(req,res)=>{
-    res.send("API Working /api/v1");
-})
+``;
+app.get("/", (req, res) => {
+  res.send("API Working /api/v1");
+});
 //using Routes
 
-app.use("/api/v1/user", userRoute);  //all user routes will will here 1
-
+app.use("/api/v1/user", userRoute); //all user routes will will here 1
+app.use("/api/v1/product", productRoute);
 //using error middleware
 
-app.use(errorMiddleware)
+app.use("/uploads", express.static("uploads"));
+app.use(errorMiddleware);
 
 app.listen(port, () => {
-    console.log(`Server is working on http://localhost:${port}`)
-})
-
+  console.log(`Server is working on http://localhost:${port}`);
+});

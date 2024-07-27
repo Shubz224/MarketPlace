@@ -44,3 +44,10 @@ export interface baseQuerytype {
 
   category?: string;
 }
+
+
+export  type invalidadtesCacheProps = {
+  product?:boolean;
+  admin?:boolean;
+  order?:boolean;
+} 

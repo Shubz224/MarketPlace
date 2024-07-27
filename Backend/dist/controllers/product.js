@@ -2,6 +2,8 @@ import { TryCatch } from "../middlewares/error.js";
 import { Product } from "../models/product.js";
 import ErrorHandler from "../utils/utility-class.js";
 import { rm } from "fs";
+import { myCache } from "../app.js";
+import { invalidadtesCache } from "../utils/features.js";
 export const newProduct = TryCatch(async (req, res, next) => {
     const { name, price, stock, category } = req.body;
     const photo = req.file;
@@ -18,24 +20,38 @@ export const newProduct = TryCatch(async (req, res, next) => {
         category: category.toLowerCase(),
         photo: photo.path,
     });
+    await invalidadtesCache({ product: true });
     return res.status(201).json({
         success: true,
         message: "Product Created Successfully",
     });
 });
-//for latest products
+//for latest products \ revalidate on new update and delete,new order
 export const getLatestProducts = TryCatch(async (req, res, next) => {
-    //querry
-    const products = await Product.find({}).sort({ createdAt: -1 }).limit(5);
+    let products = [];
+    if (myCache.has("latest-products"))
+        products = JSON.parse(myCache.get("latest-products"));
+    else {
+        //querry
+        products = await Product.find({}).sort({ createdAt: -1 }).limit(5);
+        // saved in ram ((cache )), if any other make same request will fetch them from cache storage
+        myCache.set("latest-products", JSON.stringify(products));
+    }
     return res.status(200).json({
         success: true,
         products,
     });
 });
-//for categories
+//for categories //  revalidate on new update and delete,new order
 export const getAllCategories = TryCatch(async (req, res, next) => {
     //querry
-    const categories = await Product.distinct("category");
+    let categories;
+    if (myCache.has("categories"))
+        categories = JSON.parse(myCache.get("categories"));
+    else {
+        categories = await Product.distinct("category");
+        myCache.set("categories", JSON.stringify(categories));
+    }
     return res.status(200).json({
         success: true,
         categories,
@@ -44,7 +60,14 @@ export const getAllCategories = TryCatch(async (req, res, next) => {
 //admin all products
 export const getAdminProducts = TryCatch(async (req, res, next) => {
     //querry
-    const products = await Product.find({});
+    let products;
+    if (myCache.has("all-products")) {
+        products = JSON.parse(myCache.get("all-products"));
+    }
+    else {
+        products = await Product.find({});
+        myCache.set("all-products", JSON.stringify(products));
+    }
     return res.status(200).json({
         success: true,
         products,
@@ -53,7 +76,16 @@ export const getAdminProducts = TryCatch(async (req, res, next) => {
 //id get single product
 export const getSingleProduct = TryCatch(async (req, res, next) => {
     //querry
-    const product = await Product.findById(req.params.id);
+    let product;
+    const id = req.params.id;
+    if (myCache.has(`product-${id}`))
+        product = JSON.parse(myCache.get(`product-${id}`));
+    else {
+        product = await Product.findById(id);
+        if (!product)
+            return next(new ErrorHandler("Product Not Found", 404));
+        myCache.set(`product-${id}`, JSON.stringify(product));
+    }
     return res.status(200).json({
         success: true,
         product,
@@ -82,6 +114,7 @@ export const updateProduct = TryCatch(async (req, res, next) => {
     if (category)
         product.category = category;
     await product.save();
+    await invalidadtesCache({ product: true });
     return res.status(200).json({
         success: true,
         message: "Product Updated Successfully",
@@ -97,6 +130,7 @@ export const deleteProduct = TryCatch(async (req, res, next) => {
         console.log(" Product photo Deleted");
     });
     await Product.deleteOne();
+    await invalidadtesCache({ product: true });
     return res.status(200).json({
         success: true,
         message: "Product deleted Successfully",

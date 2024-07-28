@@ -140,13 +140,14 @@ export const updateProduct = TryCatch(async (req, res, next) => {
   }
 
   if (name) product.name = name;
-  if (price) product.price = price;
+  if (price) product.price = price; 
   if (stock) product.stock = stock;
   if (category) product.category = category;
 
   await product.save();
 
-  await invalidadtesCache({ product: true });
+  //err
+  await invalidadtesCache({ product: true,productId:product._id});
 
   return res.status(200).json({
     success: true,

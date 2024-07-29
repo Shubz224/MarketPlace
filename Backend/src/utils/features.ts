@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { invalidadtesCacheProps, OrderItemType } from "../types/types.js";
 import { myCache } from "../app.js";
 import { Product } from "../models/product.js";
-import { Order } from "../models/order.js";
 
 export const connectDB = (uri: string) => {
   mongoose

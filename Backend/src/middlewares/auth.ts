@@ -15,7 +15,7 @@ export const adminOnly = TryCatch(async(req,res,next)=>{
     if(!user) return next (new ErrorHandler("Invalid Id",401));
 
 
-    if(user.role!== "admin") return  next (new ErrorHandler("Sorry Only for Admin",401));
+    if(user.role!== "admin") return  next (new ErrorHandler("Sorry Only for Admin",403));
 
     //all seafty pass checked and user directed to next function
     next();

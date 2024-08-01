@@ -114,8 +114,6 @@ export const newOrder = TryCatch(
 
     await reduceStock(orderItems);
 
-
-
     await invalidadtesCache({
       product: true,
       order: true,

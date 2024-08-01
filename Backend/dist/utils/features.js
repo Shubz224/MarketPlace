@@ -10,7 +10,7 @@ export const connectDB = (uri) => {
         .catch((e) => console.log(e));
 };
 //revalidate caching
-export const invalidadtesCache = async ({ product, admin, order, userId, orderId, productId }) => {
+export const invalidadtesCache = async ({ product, admin, order, userId, orderId, productId, }) => {
     //----------------------------------------------------------------------------->product
     if (product) {
         const productkeys = [
@@ -45,4 +45,10 @@ export const reduceStock = async (orderItems) => {
         product.stock -= order.quantity;
         await product.save();
     }
+};
+export const calculatePercentage = (thisMonth, lastMonth) => {
+    if (lastMonth === 0)
+        return thisMonth * 100;
+    const percent = ((thisMonth - lastMonth) / lastMonth) * 100;
+    return Number(percent.toFixed(0));
 };

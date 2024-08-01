@@ -1,5 +1,6 @@
 import express from "express";
 //importing routes
+import dashboardRoute from "./routes/stats.js";
 import paymentRoute from "./routes/payment.js";
 import userRoute from "./routes/user.js";
 import orderRoute from "./routes/orders.js";
@@ -30,6 +31,7 @@ app.use("/api/v1/user", userRoute); //all user routes will will here 1
 app.use("/api/v1/product", productRoute);
 app.use('/api/v1/order', orderRoute);
 app.use('/api/v1/payment', paymentRoute);
+app.use('/api/v1/dashboard', dashboardRoute);
 //using error middleware
 app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);

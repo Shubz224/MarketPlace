@@ -19,7 +19,7 @@ export const invalidadtesCache = async ({
   order,
   userId,
   orderId,
-  productId
+  productId,
 }: invalidadtesCacheProps) => {
   //----------------------------------------------------------------------------->product
   if (product) {
@@ -60,4 +60,10 @@ export const reduceStock = async (orderItems: OrderItemType[]) => {
     product.stock -= order.quantity;
     await product.save();
   }
+};
+
+export const calculatePercentage = (thisMonth:number, lastMonth: number) => {
+  if (lastMonth === 0) return thisMonth * 100
+  const percent = ((thisMonth - lastMonth) / lastMonth) * 100;
+  return  Number(percent.toFixed(0));
 };

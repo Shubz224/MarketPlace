@@ -8,8 +8,6 @@ import { myCache } from "../app.js";
 
 //one single user order
 
-
-
 export const myOrders = TryCatch(async (req, res, next) => {
   const { id: user } = req.query;
 
@@ -22,7 +20,7 @@ export const myOrders = TryCatch(async (req, res, next) => {
     orders = await Order.find({ user });
     myCache.set("key", JSON.stringify(orders));
   }
-
+  
   return res.status(200).json({
     success: true,
     orders,
@@ -114,7 +112,7 @@ export const newOrder = TryCatch(
 
     await reduceStock(orderItems);
 
-    await invalidadtesCache({
+   invalidadtesCache({
       product: true,
       order: true,
       admin: true,
@@ -153,7 +151,7 @@ export const processOrder = TryCatch(async (req, res, next) => {
 
   await order.save();
 
-  await invalidadtesCache({
+ invalidadtesCache({
     product: false,
     order: true,
     admin: true,
@@ -178,7 +176,7 @@ export const deleteOrder = TryCatch(async (req, res, next) => {
 
   await order.deleteOne();
 
-  await invalidadtesCache({
+ invalidadtesCache({
     product: false,
     order: true,
     admin: true,

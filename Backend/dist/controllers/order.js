@@ -75,7 +75,7 @@ export const newOrder = TryCatch(async (req, res, next) => {
         total,
     });
     await reduceStock(orderItems);
-    await invalidadtesCache({
+    invalidadtesCache({
         product: true,
         order: true,
         admin: true,
@@ -105,7 +105,7 @@ export const processOrder = TryCatch(async (req, res, next) => {
             break;
     }
     await order.save();
-    await invalidadtesCache({
+    invalidadtesCache({
         product: false,
         order: true,
         admin: true,
@@ -124,7 +124,7 @@ export const deleteOrder = TryCatch(async (req, res, next) => {
     if (!order)
         return next(new ErrorHandler("Order Not Found", 404));
     await order.deleteOne();
-    await invalidadtesCache({
+    invalidadtesCache({
         product: false,
         order: true,
         admin: true,

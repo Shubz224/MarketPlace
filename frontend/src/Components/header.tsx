@@ -3,8 +3,8 @@ import { Link } from "react-router-dom"
 import { FaSearch, FaShoppingBag, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa"
 import { useState } from "react";
 
-// user added then login page disappeard bug .....
-const user = { _id: "", role: "user" };
+// user added then login page disappeard bug ....
+const user = { _id: "", role: "" };
 
 const Header = () => {
 

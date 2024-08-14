@@ -4,19 +4,39 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { auth } from "../firebase";
+import { useLoginMutation } from "../redux/api/userAPI";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { MessageResponse } from "../types/api-types";
 
 const Login = () => {
   const [gender, setGender] = useState("");
   const [date, setdate] = useState("");
 
+  const [login] = useLoginMutation();
   const loginHandler = async () => {
     try {
       const provider = new GoogleAuthProvider();
 
-     const {user} =  await signInWithPopup(auth, provider);
+      const { user } = await signInWithPopup(auth, provider);
 
-     console.log(user);
+      const res = await login({
+        name: user.displayName!,
+        email: user.email!,
+        photo: user.photoURL!,
+        gender,
+        role: "user",
+        dob: date,
+        _id: user.uid,
+      });
+      if ("data" in res) {
+        toast.success((res.data as MessageResponse).message);
+      } else {
+        const error = res.error as FetchBaseQueryError;
+        const message = (error.data as MessageResponse).message;
+        toast.error(message);
+      }
 
+      console.log(user);
     } catch (error) {
       toast.error("Sign In Failed");
     }

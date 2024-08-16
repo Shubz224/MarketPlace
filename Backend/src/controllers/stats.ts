@@ -433,7 +433,6 @@ export const getLineCharts = TryCatch(async (req, res, next) => {
       discount,
       revenue,
     };
-
     myCache.set(key, JSON.stringify(charts));
   }
 

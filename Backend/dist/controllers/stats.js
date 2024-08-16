@@ -278,34 +278,34 @@ export const getLineCharts = TryCatch(async (req, res, next) => {
         const today = new Date();
         const twelveMonthAgo = new Date();
         twelveMonthAgo.setMonth(twelveMonthAgo.getMonth() - 12);
-        const basequery = {
+        const baseQuery = {
             createdAt: {
                 $gte: twelveMonthAgo,
                 $lte: today,
             },
         };
         const [products, users, orders] = await Promise.all([
-            Product.find(basequery).select("createdAt"),
-            User.find(basequery).select("createdAt"),
-            Order.find(basequery).select(["createdAt", "discount", "total"]),
+            Product.find(baseQuery).select("createdAt"),
+            User.find(baseQuery).select("createdAt"),
+            Order.find(baseQuery).select(["createdAt", "discount", "total"]),
         ]);
-        const productCount = getChartData({ length: 12, docArr: products, today });
-        const userCount = getChartData({ length: 12, docArr: users, today });
+        const productCounts = getChartData({ length: 12, today, docArr: products });
+        const usersCounts = getChartData({ length: 12, today, docArr: users });
         const discount = getChartData({
             length: 12,
-            docArr: orders,
             today,
+            docArr: orders,
             property: "discount",
         });
         const revenue = getChartData({
             length: 12,
-            docArr: orders,
             today,
+            docArr: orders,
             property: "total",
         });
         charts = {
-            users: userCount,
-            product: productCount,
+            users: usersCounts,
+            products: productCounts,
             discount,
             revenue,
         };

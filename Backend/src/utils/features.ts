@@ -1,8 +1,7 @@
-import mongoose from "mongoose";
+import mongoose,{Document} from "mongoose";
 import { invalidadtesCacheProps, OrderItemType } from "../types/types.js";
 import { myCache } from "../app.js";
 import { Product } from "../models/product.js";
-import { Document } from "mongoose";
 
 export const connectDB = (uri: string) => {
   mongoose
@@ -105,16 +104,15 @@ export const getInventries = async ({
 interface MyDocument extends Document {
   createdAt: Date;
   discount?: number;
-  total?: number;
+  total?: number | null;
 }
 
-type funcProps = {
+type FuncProps = {
   length: number;
   docArr: MyDocument[];
   today: Date;
-  property?: "discount" | "total";
+  property?: "discount" | "total" ;
 };
-
 //------------------------------------------------------------------------------------------------------>
 
 export const getChartData = ({
@@ -122,8 +120,7 @@ export const getChartData = ({
   docArr,
   today,
   property,
-}: funcProps) => {
-  //const today = new Date();
+}: FuncProps) => {
   const data: number[] = new Array(length).fill(0);
 
   docArr.forEach((i) => {
@@ -131,8 +128,13 @@ export const getChartData = ({
     const monthDiff = (today.getMonth() - creationDate.getMonth() + 12) % 12;
 
     if (monthDiff < length) {
-      data[length - monthDiff - 1] += property ? i[property]! : 1;
+      if (property) {
+        data[length - monthDiff - 1] += i[property]!;
+      } else {
+        data[length - monthDiff - 1] += 1;
+      }
     }
   });
+
   return data;
 };

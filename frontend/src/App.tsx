@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import Loader from "./Components/loader";
-
 //importing components
 const Cart = lazy(() => import("./Pages/cart"));
 const Home = lazy(() => import("./Pages/home"));
@@ -12,6 +11,13 @@ const Login = lazy(() => import("./Pages/login"));
 const Orders = lazy(() => import("./Pages/orders"));
 import Header from "./Components/header";
 import { Toaster } from "react-hot-toast";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import { userExist, userNotExist } from "./redux/reducer/userReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "./redux/api/userAPI";
+import { userReducerInitialstate } from "./types/reducer-types";
+import ProtectedRoute from "./Components/protected-route";
 
 //admin routes importing
 const Dashboard = lazy(() => import("./Pages/admin/dashboard"));
@@ -32,11 +38,32 @@ const TransactionManagement = lazy(
   () => import("./Pages/admin/management/transactionmanagement")
 );
 
+//---------------------------------------------------------------------------------------------------->
+
 const App = () => {
-  return (
+  const { user, loading } = useSelector(
+    (state: { userReducer: userReducerInitialstate }) => state.userReducer
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const data = await getUser(user.uid);
+        dispatch(userExist(data.user));
+      } else {
+        dispatch(userNotExist());
+      }
+    });
+  }, []);
+
+  return loading ? (
+    <Loader />
+  ) : (
     <Router>
       {/*Header */}
-      <Header />
+      <Header user={user} />
 
       <Suspense fallback={<Loader />}>
         <Routes>
@@ -44,11 +71,19 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/search" element={<Search />} />
           {/* Not not logged in routes */}
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={
+              <ProtectedRoute isAuthenticated={user ? false : true}>
+                <Login />
+              </ProtectedRoute>
+            }
+          />
           {/* logged in routes */}
           <Route path="/orders" element={<Orders />} />
           <Route>
             <Route path="/shipping" element={<Shipping />} />
+    
           </Route>
           <Route
           // element={

@@ -2,11 +2,15 @@
 import { Link } from "react-router-dom"
 import { FaSearch, FaShoppingBag, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa"
 import { useState } from "react";
+import { User } from "../types/types";
 
 // user added then login page disappeard bug ....
-const user = { _id: "", role: "" };
 
-const Header = () => {
+interface PropesType{
+  user:User|null;
+}
+
+const Header = ({user}:PropesType) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 

@@ -80,10 +80,11 @@ const App = () => {
             }
           />
           {/* logged in routes */}
-          <Route path="/orders" element={<Orders />} />
-          <Route>
+          <Route
+            element={<ProtectedRoute isAuthenticated={user ? true : false} />}
+          >
+            <Route path="/orders" element={<Orders />} />
             <Route path="/shipping" element={<Shipping />} />
-    
           </Route>
           <Route
           // element={

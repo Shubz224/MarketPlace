@@ -1,4 +1,5 @@
 import { FaPlus } from "react-icons/fa";
+import { server } from "../redux/store";
 
 type ProductsProps = {
   productId: string;
@@ -7,23 +8,31 @@ type ProductsProps = {
   price: number;
   stock: number;
   handler: () => void;
-}
+};
 
-const server = "ghgshgfhsgfhf";
 
-//displaying products on front  page 
+//displaying products on front  page
 
-const ProductCard = ({ productId, price, name, photo, stock, handler }: ProductsProps) => {
-  return <div className="productCard">
-    <img src={photo} alt={name} />
-    <p>{name}</p>
-    <span> ₹{price}</span>
-    <div>
-      <button onClick={() => handler()}>
-        <FaPlus />
-      </button>
+const ProductCard = ({
+  productId,
+  price,
+  name,
+  photo,
+  stock,
+  handler,
+}: ProductsProps) => {
+  return (
+    <div className="productCard">
+      <img src={`${server}/${photo}`} alt={name} />
+      <p>{name}</p>
+      <span> ₹{price}</span>
+      <div>
+        <button onClick={() => handler()}>
+          <FaPlus />
+        </button>
+      </div>
     </div>
-  </div>
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

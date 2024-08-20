@@ -371,6 +371,19 @@ dialog{
   }
 }
 
+.skeleton-loader{
+  display: flex;
+  flex-direction: column;
+}
+.skeleton-shape{
+  height: 30px;
+  width:100%;
+  background-color: #ddd;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  animation: skeleton-loading 1.5s infinite;
+}
+
 @keyframes loading-animation {
   to {
     transform: rotateZ(360deg);
@@ -380,5 +393,16 @@ dialog{
 @keyframes up-and-down {
   to {
     transform: translate(-50%, -20%);
+  }
+}
+@keyframes skeleton-loading{
+  0%{
+    opacity: 0.6;
+  }
+  50%{
+    opacity:1;
+  }
+  100%{
+    opacity: 0.6;
   }
 }

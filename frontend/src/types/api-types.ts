@@ -28,3 +28,23 @@ export type CategoriesResponse = {
   success: boolean;
   categories: string[];
 };
+
+export type SearchProductsResponse = {
+  success: boolean;
+  products: Product[];
+  totalPage: number;
+};
+
+export type SearchProductsRequest = {
+  search: string;
+  price: number;
+  category: string;
+  page: number;
+  sort:string,
+};
+
+
+export type NewProductRequest = {
+ id:string;
+  formData: FormData;
+};

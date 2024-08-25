@@ -40,11 +40,15 @@ export type SearchProductsRequest = {
   price: number;
   category: string;
   page: number;
-  sort:string,
+  sort: string;
 };
 
-
 export type NewProductRequest = {
- id:string;
+  id: string;
   formData: FormData;
+};
+
+export type ProductResponse = {
+  success: boolean;
+  product: Product;
 };

@@ -14,9 +14,7 @@ import { invalidadtesCache } from "../utils/features.js";
 export const newProduct = TryCatch(
   async (req: Request<{}, {}, NewProductrequestBody>, res, next) => {
     const { name, price, stock, category } = req.body;
-
     const photo = req.file;
-
     if (!photo) return next(new ErrorHandler("Please add photo", 400));
     if (!name || !price || !stock || !category) {
       rm(photo.path, () => console.log("Deleted"));

@@ -19,7 +19,7 @@ const Search = () => {
   const [search, setsearch] = useState("");
   const [sort, setSort] = useState("");
   const [maxPrice, SetMaxprice] = useState(100000);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] =  useState("");
   const [page, setpage] = useState(1);
 
   const {
@@ -35,6 +35,7 @@ const Search = () => {
     price: maxPrice,
   });
 
+  
   const addTocartHandler = () => {};
 
   const isprevpage = page > 1;

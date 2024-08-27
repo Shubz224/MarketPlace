@@ -134,7 +134,7 @@ export const deleteProduct = TryCatch(async (req, res, next) => {
     rm(product.photo, () => {
         console.log(" Product photo Deleted");
     });
-    await Product.deleteOne();
+    await product.deleteOne();
     invalidadtesCache({
         product: true,
         productId: String(product._id),

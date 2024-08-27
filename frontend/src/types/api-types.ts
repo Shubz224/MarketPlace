@@ -52,3 +52,16 @@ export type ProductResponse = {
   success: boolean;
   product: Product;
 };
+
+export type UpdateProductResponse = {
+  userId: string;
+  productId: string;
+  formData: FormData;
+};
+
+
+export type DeleteProductResponse = {
+  userId: string;
+  productId: string;
+  
+};

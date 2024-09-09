@@ -20,16 +20,16 @@ export type Product = {
 export type shippingInfo = {
   address: string;
   city: string;
- state: string;
+  state: string;
   country: string;
-  pincode: string;
+  pinCode: string;
 };
 
 export type cartItem = {
   productId: string;
   photo: string;
-name: string;
+  name: string;
   price: number;
   quantity: number;
- stock:number
+  stock: number;
 };

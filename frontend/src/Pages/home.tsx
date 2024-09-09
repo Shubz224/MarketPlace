@@ -11,10 +11,11 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  const addTocartHandler = (cartitem: cartItem) => {
-    if (cartitem.stock < 1) return toast.error("Out of Stock");
+  const addTocartHandler = (cartItem: cartItem) => {
+    if (cartItem.stock < 1) return toast.error("Out of Stock");
 
-    dispatch(addToCart(cartitem));
+    dispatch(addToCart(cartItem));
+    toast.success("Added to cart");
   };
 
   if (isError) toast.error("Cannot fetch the Products");

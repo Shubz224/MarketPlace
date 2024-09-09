@@ -1,18 +1,40 @@
 import { useEffect, useState } from "react";
 import { VscError } from "react-icons/vsc";
-import CartItem from "../Components/cart-Item";
+import CartItemCard from "../Components/cart-Item";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cartReducerInitialstate } from "../types/reducer-types";
-
+import { cartItem } from "../types/types";
+import {
+  addToCart,
+  calculatePrice,
+  removeCartItem,
+} from "../redux/reducer/cartReducer";
 
 const Cart = () => {
-  const { cartItems,subtotal,tax,total,shippingCharges ,discount} = useSelector(
-    (state: { cartReducer: cartReducerInitialstate }) => state.cartReducer
-  );
+  const { cartItems, subtotal, tax, total, shippingCharges, discount } =
+    useSelector(
+      (state: { cartReducer: cartReducerInitialstate }) => state.cartReducer
+    );
+
+  const dispatch = useDispatch();
 
   const [CouponCode, setCouponCode] = useState<string>("");
   const [isvalidCouponCode, setisvalidCouponCode] = useState<boolean>(false);
+
+  const incrementHandler = (cartItem: cartItem) => {
+    if (cartItem.quantity >= cartItem.stock) return;
+    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity + 1 }));
+  };
+
+  const decrementtHandler = (cartItem: cartItem) => {
+    if (cartItem.quantity <= 1) return;
+
+    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity - 1 }));
+  };
+  const removeHandler = (productId: string) => {
+    dispatch(removeCartItem(productId));
+  };
 
   useEffect(() => {
     const timeOutID = setTimeout(() => {
@@ -26,11 +48,25 @@ const Cart = () => {
     };
   }, [CouponCode]);
 
+  //---------------------------------------------------------------------------------------------------------------------------------------------.
+
+  useEffect(() => {
+    dispatch(calculatePrice());
+  }, [cartItems]);
+
   return (
     <div className="cart">
       <main>
         {cartItems.length > 0 ? (
-          cartItems.map((i, idx) => <CartItem key={idx} cartItem={i} />)
+          cartItems.map((i, idx) => (
+            <CartItemCard
+              incrementHandler={incrementHandler}
+              decrementtHandler={decrementtHandler}
+              removHandler={removeHandler}
+              key={idx}
+              cartItem={i}
+            />
+          ))
         ) : (
           <h1>No Items Added</h1>
         )}

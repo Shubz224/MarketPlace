@@ -1,9 +1,16 @@
 import { ChangeEvent, useState } from "react"
 import { BiArrowBack } from "react-icons/bi";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { cartReducerInitialstate } from "../types/reducer-types";
 
 
 const Shipping = () => {
+
+    const { cartItems, subtotal, tax, total, shippingCharges, discount } =
+    useSelector(
+      (state: { cartReducer: cartReducerInitialstate }) => state.cartReducer
+    );
     
    const navigate = useNavigate()
     

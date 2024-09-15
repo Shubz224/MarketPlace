@@ -8,8 +8,11 @@ import { cartItem } from "../types/types";
 import {
   addToCart,
   calculatePrice,
+  discountApplied,
   removeCartItem,
 } from "../redux/reducer/cartReducer";
+import axios from "axios";
+import { server } from "../redux/store";
 
 const Cart = () => {
   const { cartItems, subtotal, tax, total, shippingCharges, discount } =
@@ -37,13 +40,28 @@ const Cart = () => {
   };
 
   useEffect(() => {
+    const { token: cancelToken, cancel } = axios.CancelToken.source();
+
     const timeOutID = setTimeout(() => {
-      if (Math.random() > 0.5) setisvalidCouponCode(true);
-      else setisvalidCouponCode(false);
+      axios
+        .get(`${server}/api/v1/payment/discount?coupon=${CouponCode}`, {
+          cancelToken,
+        })
+        .then((res) => {
+          dispatch(discountApplied(res.data.discount));
+          setisvalidCouponCode(true);
+          dispatch(calculatePrice());
+        })
+        .catch(() => {
+          dispatch(discountApplied(0));
+          dispatch(calculatePrice());
+          setisvalidCouponCode(false);
+        });
     }, 1000);
 
     return () => {
       clearTimeout(timeOutID);
+      cancel();
       setisvalidCouponCode(false);
     };
   }, [CouponCode]);

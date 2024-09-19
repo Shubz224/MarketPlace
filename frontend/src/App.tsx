@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./redux/api/userAPI";
 import { userReducerInitialstate } from "./types/reducer-types";
 import ProtectedRoute from "./Components/protected-route";
+import Notfound from "./Pages/not-found";
+import Checkout from "./Pages/checkout";
 
 //admin routes importing
 const Dashboard = lazy(() => import("./Pages/admin/dashboard"));
@@ -85,13 +87,14 @@ const App = () => {
           >
             <Route path="/orders" element={<Orders />} />
             <Route path="/shipping" element={<Shipping />} />
+            <Route path="/pay" element={<Checkout />} />
           </Route>
           <Route
             element={
               <ProtectedRoute
                 isAuthenticated={true}
                 adminOnly={true}
-                admin={user?.role==="admin"?true:false}
+                admin={user?.role === "admin" ? true : false}
               />
             }
           >
@@ -118,7 +121,8 @@ const App = () => {
               element={<TransactionManagement />}
             />
           </Route>
-          ;
+
+          <Route path="*" element={<Notfound />} />
         </Routes>
       </Suspense>
 

@@ -1,7 +1,13 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import TableHOC from "../Components/admin/TableHOC"
 import { Column } from "react-table";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { userReducerInitialstate } from "../types/reducer-types";
+import { CustomError } from "../types/api-types";
+import toast from "react-hot-toast";
+import { useMyOrdersQuery } from "../redux/api/orderAPI";
+import { Skeleton } from "../Components/loader";
 
 
 type DataType = {
@@ -43,15 +49,71 @@ const column:Column<DataType>[]=[{
 
 const Orders = () => {
 
-const[rows]= useState<DataType[]>([{
 
-  _id :"fddfddfdf",
-  amount:546363,
-  quantity:24,
-  discount:700,
-  status:<span className="red">Processing</span>,
-  action:<Link to={`/order/fddfddfdf`}>View</Link>,
-}])
+  const { user } = useSelector(
+    (state: { userReducer: userReducerInitialstate }) => state.userReducer
+  );
+  
+
+
+  const { isLoading, isError, error, data } = useMyOrdersQuery(user?._id!);
+
+
+
+const[rows,setRows]= useState<DataType[]>([]);
+
+
+if (isError) toast.error((error as CustomError).data.message);
+
+useEffect(() => {
+  if (data)
+    setRows(
+      data.orders.map((i) => ({
+        _id: i._id,
+        amount: i.total,
+        discount: i.discount,
+        quantity: i.orderItems.length,
+        status: (
+          <span
+            className={
+              i.status === "Processing"
+                ? "red"
+                : i.status === "Shipped"
+                ? "green"
+                : "purple"
+            }
+          >
+            {i.status}
+          </span>
+        ),
+        action: <Link to={`/admin/transaction/${i._id}`}>Manage</Link>,
+      }))
+    );
+}, [data]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 const Table = TableHOC<DataType>(
@@ -65,7 +127,7 @@ const Table = TableHOC<DataType>(
 
   return  <div className="container">
      <h1>My Orders</h1>
-     {Table}
+     <main>{isLoading ? < Skeleton width="3vh" /> : Table}</main>
   </div>
 }
 

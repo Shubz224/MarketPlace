@@ -36,7 +36,7 @@ export const orderApi = createApi({
       invalidatesTags: ["orders"],
     }),
 
-    myOrders: builder.query<AllOrdersResponse, NewOrderRequest>({
+    myOrders: builder.query<AllOrdersResponse, string>({
       query: (id) => `my?id=${id}`,
       providesTags: ["orders"],
     }),

@@ -2,10 +2,10 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import AdminSidebar from "../../../Components/admin/AdminSidebar";
 import { useSelector } from "react-redux";
-import { userReducerInitialstate } from "../../../types/reducer-types";
+import { UserReducerInitialState} from "../../../types/reducer-types";
 import {
   useDeleteProductMutation,
-  useProductdetailsQuery,
+  useProductDetailsQuery,
   useUpdateProductMutation,
 } from "../../../redux/api/productAPI";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,13 +15,13 @@ import { responseToast } from "../../../utils/features";
 
 const Productmanagement = () => {
   const { user } = useSelector(
-    (state: { userReducer: userReducerInitialstate }) => state.userReducer
+    (state: { userReducer: UserReducerInitialState }) => state.userReducer
   );
 
   const params = useParams();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useProductdetailsQuery(params.id!);
+  const { data, isLoading } = useProductDetailsQuery(params.id!);
 
   const { price, name, photo, category, stock } = data?.product || {
     photo: "",

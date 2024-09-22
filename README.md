@@ -1,6 +1,6 @@
 # MarketPlace
 
-![Intro Image](path/to/intro-image.png)
+![Intro Image](assets\Screenshot (83).png)
 
 **MarketPlace** is a fully functional e-commerce web application built to provide users with an easy, efficient, and seamless shopping experience. While building this project, I focused on learning and implementing new technologies like TypeScript, Redux Toolkit, Firebase, and MongoDB to create an optimal blend of frontend performance and backend scalability. 
 
@@ -81,24 +81,24 @@ Here are some snapshots demonstrating the core features of MarketPlace:
 
 ### Customer Interface
 
-- ![Home Page](path/to/homepage-image.png)
+- ![Home Page](assets\Screenshot (83).png)
   _The homepage displaying the latest products and categories._
 
-- ![Product Search](path/to/search-page-image.png)
+- ![Product Search](assets\Screenshot (84).png)
   _Search and sort products based on categories and price._
 
-- ![Cart System](path/to/cart-image.png)
+- ![Cart System](assets\Screenshot (91).png)
   _The cart page showing product details, coupon application, taxes, and total._
 
 ### Admin Interface
 
-- ![Admin Dashboard](path/to/admin-dashboard-image.png)
+- ![Admin Dashboard](assets\Screenshot (85).png)
   _The admin dashboard with product management options and data visualizations._
 
-- ![Order Management](path/to/order-management-image.png)
+- ![Order Management](assets\Screenshot (89).png)
   _Order management interface where admins can view and process customer orders._
 
-- ![Graphs](path/to/graphs-image.png)
+- ![Graphs](assets\Screenshot (88).png)
   _Line, pie, and bar graphs displaying sales and revenue insights._
 
 ---

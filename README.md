@@ -81,24 +81,24 @@ Here are some snapshots demonstrating the core features of MarketPlace:
 
 ### Customer Interface
 
-- ![Home Page](assets\Screenshot (83).png)
+- ![Home Page](./assets//home.png)
   _The homepage displaying the latest products and categories._
 
-- ![Product Search](assets\Screenshot (84).png)
+- ![Product Search](./assets//Screenshot%20(84).png)
   _Search and sort products based on categories and price._
 
-- ![Cart System](assets\Screenshot (91).png)
+- ![Cart System](./assets//Screenshot%20(91).png)
   _The cart page showing product details, coupon application, taxes, and total._
 
 ### Admin Interface
 
-- ![Admin Dashboard](assets\Screenshot (85).png)
+- ![Admin Dashboard](./assets//Screenshot%20(85).png)
   _The admin dashboard with product management options and data visualizations._
 
-- ![Order Management](assets\Screenshot (89).png)
+- ![Order Management](./assets//Screenshot%20(89).png)
   _Order management interface where admins can view and process customer orders._
 
-- ![Graphs](assets\Screenshot (88).png)
+- ![Graphs](./assets//Screenshot%20(88).png)
   _Line, pie, and bar graphs displaying sales and revenue insights._
 
 ---
@@ -142,10 +142,4 @@ Another challenge was integrating **React Charts** and using **Redux Toolkit Que
 
 ---
 
-## How to Install
 
-To run this project locally, follow these steps:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/MarketPlace.git

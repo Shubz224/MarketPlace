@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import { Column } from "react-table";
 import AdminSidebar from "../../Components/admin/AdminSidebar";
 import TableHOC from "../../Components/admin/TableHOC";
-import { useAllproductsQuery } from "../../redux/api/productAPI";
+import { useAllProductsQuery } from "../../redux/api/productAPI";
 import { server } from "../../redux/store";
 import toast from "react-hot-toast";
 import { CustomError } from "../../types/api-types";
 import { useSelector } from "react-redux";
-import { userReducerInitialstate } from "../../types/reducer-types";
+import { UserReducerInitialState } from "../../types/reducer-types";
 import { Skeleton } from "../../Components/loader";
 
 interface DataType {
@@ -45,9 +45,9 @@ const columns: Column<DataType>[] = [
 
 const Products = () => {
   const { user } = useSelector(
-    (state: { userReducer: userReducerInitialstate }) => state.userReducer
+    (state: { userReducer: UserReducerInitialState }) => state.userReducer
   );
-  const { isLoading, isError, data, error } = useAllproductsQuery(user?._id!);
+  const { isLoading, isError, data, error } = useAllProductsQuery(user?._id!);
 
   const [rows, setRows] = useState<DataType[]>([]);
 

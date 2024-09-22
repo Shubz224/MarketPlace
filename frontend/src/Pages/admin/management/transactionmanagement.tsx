@@ -1,14 +1,12 @@
 import { FaTrash } from "react-icons/fa";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import AdminSidebar from "../../../Components/admin/AdminSidebar";
-import { Order, orderItem } from "../../../types/types";
+import { Order, OrderItem } from "../../../types/types";
 import { useSelector } from "react-redux";
-import { userReducerInitialstate } from "../../../types/reducer-types";
+import { UserReducerInitialState } from "../../../types/reducer-types";
 import { useDeleteOrderMutation, useOrderDetailsQuery, useUpdateOrderMutation } from "../../../redux/api/orderAPI";
 import { Skeleton } from "../../../Components/loader";
 import { responseToast } from "../../../utils/features";
-
-//const orderItems: any[] = [];
 
 const defaultData: Order = {
   shippingInfo: {
@@ -18,58 +16,59 @@ const defaultData: Order = {
     country: "",
     pinCode: "",
   },
-  status: "",
+  status: "Pending",
   subtotal: 0,
   discount: 0,
   shippingCharges: 0,
   tax: 0,
   total: 0,
   orderItems: [],
-  user: { name: "", _id: "" },
+  user: { name: "Unknown User", _id: "" },
   _id: "",
 };
 
 const TransactionManagement = () => {
   const { user } = useSelector(
-    (state: { userReducer: userReducerInitialstate }) => state.userReducer
+    (state: { userReducer: UserReducerInitialState }) => state.userReducer
   );
 
   const params = useParams();
   const navigate = useNavigate();
 
-  const { isLoading, isError, error, data } = useOrderDetailsQuery(params.id!);
+  const { isLoading, isError, data } = useOrderDetailsQuery(params.id!);
+
+  // Check if data is available; if not, use defaultData
+  const order = data?.order || defaultData;
 
   const {
-    shippingInfo: { address, city, state, country, pinCode },
-    orderItems,
-    user: { name },
-    status,
-    subtotal,
-    tax,
-    total,
-    discount,
-    shippingCharges,
-  } = data?.order || defaultData;
+    shippingInfo: { address = "", city = "", state = "", country = "", pinCode = "" },
+    orderItems = [],
+    user: { name = "Unknown User" },
+    status = "Pending",
+    subtotal = 0,
+    tax = 0,
+    total = 0,
+    discount = 0,
+    shippingCharges = 0,
+  } = order;
 
-const[updateOrder] = useUpdateOrderMutation()
-const[deleteOrder] = useDeleteOrderMutation()
+  const [updateOrder] = useUpdateOrderMutation();
+  const [deleteOrder] = useDeleteOrderMutation();
 
-
-  const updateHandler = async() => {
-  const res = await updateOrder({
-    userId:user?._id!,
-    orderId:data?.order._id!,
-  });
-  responseToast(res,navigate,"/admin/transaction");
-
+  const updateHandler = async () => {
+    const res = await updateOrder({
+      userId: user?._id!,
+      orderId: order._id,
+    });
+    responseToast(res, navigate, "/admin/transaction");
   };
 
-  const deleteHandler =async () => {
+  const deleteHandler = async () => {
     const res = await deleteOrder({
-      userId:user?._id!,
-      orderId:data?.order._id!,
+      userId: user?._id!,
+      orderId: order._id,
     });
-    responseToast(res,navigate,"/admin/transaction");
+    responseToast(res, navigate, "/admin/transaction");
   };
 
   if (isError) return <Navigate to={"/404"} />;
@@ -82,24 +81,23 @@ const[deleteOrder] = useDeleteOrderMutation()
           <Skeleton />
         ) : (
           <>
-            <section
-              style={{
-                padding: "2rem",
-              }}
-            >
+            <section style={{ padding: "2rem" }}>
               <h2>Order Items</h2>
-
-              {orderItems.map((i) => (
-                <ProductCard
-                  key={i._id}
-                  name={i.name}
-                  photo={i.photo}
-                  productId={i.productId}
-                  _id={i._id}
-                  quantity={i.quantity}
-                  price={i.price}
-                />
-              ))}
+              {orderItems.length === 0 ? (
+                <p>No items in this order.</p>
+              ) : (
+                orderItems.map((i) => (
+                  <ProductCard
+                    key={i._id}
+                    name={i.name || "Unknown Product"}
+                    photo={i.photo || ""}
+                    productId={i.productId || ""}
+                    _id={i._id}
+                    quantity={i.quantity || 0}
+                    price={i.price || 0}
+                  />
+                ))
+              )}
             </section>
 
             <article className="shipping-info-card">
@@ -110,15 +108,14 @@ const[deleteOrder] = useDeleteOrderMutation()
               <h5>User Info</h5>
               <p>Name: {name}</p>
               <p>
-                Address:{" "}
-                {`${address}, ${city}, ${state}, ${country} ${pinCode}`}
+                Address: {`${address}, ${city}, ${state}, ${country} ${pinCode}`.trim() || "Address not provided"}
               </p>
               <h5>Amount Info</h5>
-              <p>Subtotal: {subtotal}</p>
-              <p>Shipping Charges: {shippingCharges}</p>
-              <p>Tax: {tax}</p>
-              <p>Discount: {discount}</p>
-              <p>Total: {total}</p>
+              <p>Subtotal: ₹{subtotal.toFixed(2)}</p>
+              <p>Shipping Charges: ₹{shippingCharges.toFixed(2)}</p>
+              <p>Tax: ₹{tax.toFixed(2)}</p>
+              <p>Discount: ₹{discount.toFixed(2)}</p>
+              <p>Total: ₹{total.toFixed(2)}</p>
 
               <h5>Status Info</h5>
               <p>
@@ -152,12 +149,12 @@ const ProductCard = ({
   price,
   quantity,
   productId,
-}: orderItem) => (
+}: OrderItem) => (
   <div className="transaction-product-card">
     <img src={photo} alt={name} />
     <Link to={`/product/${productId}`}>{name}</Link>
     <span>
-      ₹{price} X {quantity} = ₹{price * quantity}
+      ₹{price} X {quantity} = ₹{(price * quantity).toFixed(2)}
     </span>
   </div>
 );

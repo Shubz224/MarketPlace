@@ -1,6 +1,6 @@
 # MarketPlace
 
-![Intro Image](assets\home.png)
+![Intro Image](./assets//home.png)
 
 **MarketPlace** is a fully functional e-commerce web application built to provide users with an easy, efficient, and seamless shopping experience. While building this project, I focused on learning and implementing new technologies like TypeScript, Redux Toolkit, Firebase, and MongoDB to create an optimal blend of frontend performance and backend scalability. 
 
